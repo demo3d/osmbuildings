@@ -1,0 +1,76 @@
+﻿<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Los Angeles Census Tracts</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link href="CSS/leaflet.css" rel="stylesheet" />
+        <!-- <script src="data/LA_points2.js"></script>   -->         
+
+        <script src="JS/OSMBuildings-Leaflet.debug.js"></script>
+        <script src="JS/jquery-1.10.2.min.js"></script>
+        <script src="JS/leaflet.js"></script>
+        <script src="JS/map_styles.js"></script>
+        <link href="CSS/styles.css" rel="stylesheet" />
+
+        
+    </head>
+    
+    
+    <body>
+        
+
+        <div id="map_main"></div>
+       
+
+        <script type="text/javascript">
+
+        var geoJSON = [
+            {
+                "type":"FeatureCollection",
+                "crs":{"type":"name",
+                    "properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}
+                },
+                "features":[{
+                    "type":"Feature",
+                    "properties":{
+                        "LotSales":170069,
+                        "SalPPerson":58,
+                        "height":58,
+                        "minHeight":0,
+                        "wallColor": "rgb(255,0,0)",
+                        "roofColor": "rgb(255,128,0)"
+                    },
+                    "geometry":{
+                        "type":"Polygon",
+                        "coordinates":[[
+                            [-118.38103100008132,34.04532399970256],
+                            [-118.37681900009754,34.044532000051476],
+                            [-118.37720599995767,34.03824199956839],
+                            [-118.38295099958968,34.039821999585364],
+                            [-118.38103100008132,34.04532399970256]
+                            ]
+                        ]
+                    }
+                }]
+            }
+        ];
+
+
+            var map = new L.Map('map_main').setView([34.04532399970256, -118.38103100008132], 12);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+            id: 'mapbox.light'
+            }).addTo(map);
+
+            new OSMBuildings(map).set(geoJSON);
+
+            
+
+        </script>
+
+    </body>
+
+</html>
