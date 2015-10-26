@@ -18,7 +18,7 @@
     <body>
         <ul id="sdbuttoncontainer">
             <li><a href="#" id="LA_button" class="LA_button" >LOS ANGELES SCHOOL DISTRICT</a></li>
-            <li><a href="#" id="SD_button" class="SanDiego_button" >SAN DIEGO SCHOOL DISTRICT</a></li>
+            <!-- <li><a href="#" id="SD_button" class="SanDiego_button" >SAN DIEGO SCHOOL DISTRICT</a></li> -->
         </ul>
 
         <div id="map"></div>
@@ -46,14 +46,14 @@
             }).addTo(map);
 
 
-            new OSMBuildings(map).set(LA_ct);
+            // new OSMBuildings(map).set(LA_ct);
 
 
-            // LA_button.onclick = function () {
-            //   LA_button.className = 'active';
-            //     map.setView([34.055420, -118.528479], 10);
-            //     new OSMBuildings(map).set(LA_ct);
-            // }
+            LA_button.onclick = function () {
+              LA_button.className = 'active';
+                map.setView([34.055420, -118.528479], 10);
+                new OSMBuildings(map).set(LA_ct);
+            }
 
 
         </script>
