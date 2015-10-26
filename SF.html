@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Los Angeles Census Tracts</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        <link href="css/CA.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
+        <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
+        <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
+        <script src="data/SF_ct.geojson" type="text/javascript"></script>
+        <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
+        
+    </head>
+    
+    
+    <body>
+        <ul id="sdbuttoncontainer">
+            <li><a href="#" id="SF_button" class="SF_button" >SAN FRANCISCO SCHOOL DISTRICT</a></li>
+            <!-- <li><a href="#" id="SD_button" class="SanDiego_button" >SAN DIEGO SCHOOL DISTRICT</a></li> -->
+        </ul>
+
+        <div id="map"></div>
+       
+        <div id="saip-banner">
+            <a href="http://www.edbuild.org/"><img style="vertical-align:top" src="images/logo_inverse_262x160.png" id="logo"></a>
+            <span><h3>California Lottery - Wealth Transfer</h3></span>
+        </div>
+
+        <script type="text/javascript">
+
+            var map = new L.map('map').setView([37.674712, -122.575735], 10);  
+
+            var ui = document.getElementById('map-ui');
+
+            // new L.Control.Zoom({position: 'bottomleft'}).addTo(map);
+
+            new L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+                maxZoom: 18,
+                minZoom: 9,
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                id: 'mapbox.light'
+            }).addTo(map);
+
+            SF_button.onclick = function () {
+              SF_button.className = 'active';
+                map.setView([37.674712, -122.575735], 10);
+                new OSMBuildings(map).set(SF_ct);
+            }
+
+
+        </script>
+
+    </body>
+
+</html>
