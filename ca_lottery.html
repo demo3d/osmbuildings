@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Lottery Sales in California</title>
+        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+        <link href="css/ca_lotteyr.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
+        <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
+        <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+
+<nav id='menu-ui' class='menu-ui'></nav>
+
+<div id="map"></div>
+       
+<div id="saip-banner">
+    <a href="http://www.edbuild.org/"><img style="vertical-align:top" src="images/logo_inverse_262x160.png" id="logo"></a>
+    <span><h3>California Lottery - Wealth Transfer</h3></span>
+</div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZWRidWlsZCIsImEiOiJ4bHp6Y0tjIn0.dpqBXb1GS1wFAVamebENvQ';
+var map = L.mapbox.map('map')
+  .setView([36.771900, -119.602869], 6)
+  .addControl(L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+
+  }));
+
+var layers = document.getElementById('menu-ui');
+
+var stamenLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',{
+  attribution: '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+}).addTo(map);
+
+var muniGrid = L.mapbox.gridLayer('edbuild.CA_LotterySales').addTo(map);
+var muniControl = L.mapbox.gridControl(muniGrid, {follow: false}).addTo(map); 
+
+addLayer(L.mapbox.tileLayer('edbuild.CA_CT_MHI_13'), 'Median Household Income', 3);
+addLayer(L.mapbox.tileLayer('edbuild.CA_CT_Poverty13'), 'Poverty Rate', 4);
+addLayer(L.mapbox.tileLayer('edbuild.95702fa3'), 'Student Poverty Rate', 5);
+addLayer(L.mapbox.tileLayer('edbuild.CA_LotterySales'), 'Lottery Retailers', 5);
+
+
+function addLayer(layer, name, zIndex) {
+    layer
+        .setZIndex(zIndex)
+        .addTo(map);
+
+    // Create a simple layer switcher that
+    // toggles layers on and off.
+    var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.innerHTML = name;
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+            this.className = '';
+        } else {
+            map.addLayer(layer);
+            this.className = 'active';
+        }
+    };
+
+    layers.appendChild(link);
+}
+</script>
+</body>
+</html>
