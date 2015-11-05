@@ -3,19 +3,13 @@
     <head>
         <meta charset=utf-8 />
         <title>Lottery Sales in California</title>
-        <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
-        <link href="css/ca_lotteyr.css" rel="stylesheet" type="text/css" />
+        <link href="css/ca_lotterymap.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
-        <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
-        <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
         <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
-<style>
-  body { margin:0; padding:0; }
-  #map { position:absolute; top:0; bottom:0; width:100%; }
-</style>
 </head>
 <body>
 
@@ -25,7 +19,7 @@
        
 <div id="saip-banner">
     <a href="http://www.edbuild.org/"><img style="vertical-align:top" src="images/logo_inverse_262x160.png" id="logo"></a>
-    <span><h3>California Lottery - Wealth Transfer</h3></span>
+    <span><h3>California Lottery</h3></span>
 </div>
 
 <script>
@@ -39,25 +33,41 @@ var map = L.mapbox.map('map')
 
 var layers = document.getElementById('menu-ui');
 
+///To add if we use the school icons website I downloaded: http://www.flaticon.com/free-icon/old-school_5082
+////   insert to credit author   <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+
+
 var stamenLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',{
   attribution: '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
-var muniGrid = L.mapbox.gridLayer('edbuild.CA_LotterySales').addTo(map);
-var muniControl = L.mapbox.gridControl(muniGrid, {follow: false}).addTo(map); 
-
-addLayer(L.mapbox.tileLayer('edbuild.o0kbkc3l'), 'California School Districts', 3);
-addLayer(L.mapbox.tileLayer('edbuild.CA_CT_Poverty13'), 'Poverty Rate', 4);
-addLayer(L.mapbox.tileLayer('edbuild.95702fa3'), 'Student Poverty Rate', 5);
-addLayer(L.mapbox.tileLayer('edbuild.CA_LotterySales'), 'Lottery Retailers', 5);
+var schoolGrid = L.mapbox.gridLayer('edbuild.BiggestLosingCensusTracts').addTo(map);
+var schoolControl = L.mapbox.gridControl(schoolGrid, {follow: false}).addTo(map); 
 
 
-function addLayer(layer, name, zIndex) {
+var districtGrid = L.mapbox.gridLayer('edbuild.CA_SchoolDistricts').addTo(map);
+var districtControl = L.mapbox.gridControl(districtGrid, {follow: false}).addTo(map); 
+
+
+var retailerGrid = L.mapbox.gridLayer('edbuild.CA_LotteryRetailers').addTo(map);
+var retailerControl = L.mapbox.gridControl(retailerGrid, {follow: false}).addTo(map); 
+
+
+addLayer(L.mapbox.tileLayer('edbuild.CA_SchoolDistricts'), 'California School Districts', districtGrid, districtControl);
+addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers', retailerGrid, retailerControl);
+addLayer(L.mapbox.tileLayer('edbuild.BiggestLosingCensusTracts'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
+
+
+//Streetmap Overlay Base Layer
+var overlay = L.mapbox.tileLayer('edbuild.f4de156e').addTo(map);
+
+
+
+function addLayer(layer, name, gridLayer, gridControl) {
     layer
-        .setZIndex(zIndex)
         .addTo(map);
 
-    // Create a simple layer switcher that
+    // Create a layer switcher that
     // toggles layers on and off.
     var link = document.createElement('a');
         link.href = '#';
@@ -70,10 +80,16 @@ function addLayer(layer, name, zIndex) {
 
         if (map.hasLayer(layer)) {
             map.removeLayer(layer);
+            map.removeLayer(gridLayer);
+            map.removeControl(gridControl);
             this.className = '';
         } else {
             map.addLayer(layer);
+            gridLayer.addTo(map);
+            gridControl.addTo(map);
             this.className = 'active';
+            map.removeLayer(overlay);
+            overlay.addTo(map);
         }
     };
 
