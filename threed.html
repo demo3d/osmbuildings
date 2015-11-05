@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>3d Lottery</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
+        <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
+        <script src="data/LA_ct.geojson" type="text/javascript"></script>
+        <link href="css/threed.css" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
+        
+    </head>
+    
+    
+    <body>
+        <div class="container">
+          <h2>Lottery Sales Per Capita</h2>                                          
+          <div class="dropdown">
+            <button class="dropButton" type="button" data-toggle="dropdown">Select a district
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="LA_button" class="LA_button">Los Angeles School District</a></li>
+              <li><a href="#" id="Oakland_button" class="Oakland_button">Oakland School District</a></li>
+              <li><a href="#" id="Sac_button" class="Sac_button">Sacramento School District</a></li>
+              <li><a href="#" id="SD_button" class="SD_button">San Diego School District</a></li>
+              <li><a href="#" id="SF_button" class="SF_button">San Francisco School District</a></li>
+            </ul>
+          </div>
+        </div>
+        <iframe id="iframe" src="districts/LA.html"></iframe>
+        <!-- src="http://blank.org/" -->
+
+        <script type="text/javascript">
+
+            LA_button.onclick = function () {
+              var info = "districts/LA.html";
+              document.getElementById('iframe').src = info;
+            }
+
+            SD_button.onclick = function () {
+              var info = "districts/SD.html";
+              document.getElementById('iframe').src = info;
+            }
+
+
+            SF_button.onclick = function () {
+              var info = "districts/SF.html";
+              document.getElementById('iframe').src = info;
+            }
+
+            Oakland_button.onclick = function () {
+              var info = "districts/Oakland.html";
+              document.getElementById('iframe').src = info;
+            }
+
+            Sac_button.onclick = function () {
+              var info = "districts/Sac.html";
+              document.getElementById('iframe').src = info;
+            }
+
+
+        </script>
+
+    </body>
+
+</html>
