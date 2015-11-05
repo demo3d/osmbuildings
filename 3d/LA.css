@@ -1,0 +1,123 @@
+html, body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#map{
+  position:absolute;
+  top: 25px;
+  bottom:0; 
+  width:100%;
+ }   
+
+/* Styling for  Header */
+/********************************************/
+/********************************************/
+
+div#saip-banner {
+    position: absolute;
+    background-color: #F4F7F8;
+    width: 100%;
+    height: 25px;
+    text-transform: uppercase;
+}
+
+div#saip-banner span{
+  font-family: 'Lato';
+  margin-top: -18px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: #58595b;
+  font-size: 1em;
+}
+
+img#logo{
+  margin-left: 2.1%;
+  margin-top: 11px;
+  height: 65%;
+}  
+
+/* School District zoom buttons*/
+
+ul#sdbuttoncontainer {
+  top: 85px;
+  float: right;
+  padding-right: 30px;
+  position: relative;
+  list-style: none;
+}
+
+#sdbuttoncontainer li a{
+  font-family: 'Lato', sans-serif;
+  font-size:.9em;
+  font-weight:normal;
+  text-decoration:none;
+  text-align: center;
+  color: #8BA1A6;
+  display: block;
+}
+
+/* Styling for LEGEND */
+/********************************************/
+/********************************************/
+
+#legendcontainer{
+      display: block;
+      border: 1px solid #3887BE;
+      height: auto;
+      padding-right: 1%;
+      font: normal 13px/18px 'Lato';
+      width: auto;
+      position: absolute;
+      left: 1%;
+      bottom: 5%;
+      background: white;
+}
+
+#legend-ui {
+    list-style: none;
+    padding-left: 2%;
+}
+
+div#legendTitle {
+    text-align: left;
+    margin-left: 2px;
+    margin-top: 2px;
+    font-weight: bold;
+    font-size: 1.1em;
+    }
+
+/*ul#legend-ui li {
+    list-style: none;
+}*/
+
+#legend-ui li ul.legend {
+    background: #FFF;
+    display: inline-block;
+    padding-left: 0px;
+    margin-left: -35px;
+    margin-top: -2px;
+}
+
+#legend-ui li {
+    list-style-type: none;
+    font:13px/18px 'Lato';
+}
+
+#legend-ui li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+}
+
+
+
