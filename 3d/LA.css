@@ -9,7 +9,7 @@ html, body {
 
 #map{
   position:absolute;
-  top: 25px;
+  top: 45px;
   bottom:0; 
   width:100%;
  }   
@@ -22,7 +22,7 @@ div#saip-banner {
     position: absolute;
     background-color: #F4F7F8;
     width: 100%;
-    height: 25px;
+    height: 45px;
     text-transform: uppercase;
 }
 
@@ -36,6 +36,19 @@ div#saip-banner span{
   font-size: 1em;
 }
 
+h5#instructions {
+  font-family: 'Lato';
+  margin-top: -18px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: #58595b;
+}
+
+h3 {
+  margin-bottom: 0px;
+}
+
 img#logo{
   margin-left: 2.1%;
   margin-top: 11px;
@@ -44,13 +57,13 @@ img#logo{
 
 /* School District zoom buttons*/
 
-ul#sdbuttoncontainer {
+/*ul#sdbuttoncontainer {
   top: 85px;
   float: right;
   padding-right: 30px;
   position: relative;
   list-style: none;
-}
+}*/
 
 #sdbuttoncontainer li a{
   font-family: 'Lato', sans-serif;
@@ -77,6 +90,20 @@ ul#sdbuttoncontainer {
       left: 1%;
       bottom: 5%;
       background: white;
+}
+
+p#explore{
+  margin-top: 0px;
+  padding-left: 5px;
+  margin-right: -5px;
+  font-family: 'Lato';
+  font-size: 1.1em;
+  text-align: center;
+}
+
+div#legendcontainer hr {
+    margin-left: 8px;
+    margin-top: -10px;
 }
 
 #legend-ui {
@@ -119,5 +146,39 @@ div#legendTitle {
     border: 1px solid #999;
 }
 
+ul#sdbuttoncontainer {
+    display: inline-block;
+    position: relative;
+    padding-left: 4%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    width: 100%;
+}
 
+#twoD_button {
+    display: inline-block;
+    position: relative;
+    margin: 6px auto;
+    width: 49%;
+    border-color: #7AB6CC;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    background: #3990A3;
+}
+
+
+#threeD_button {
+    display: inline-block;
+    position: relative;
+    margin: 6px auto;
+    width: 49%;
+    border-color: #7AB6CC;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    background: #3990A3;
+}
 
