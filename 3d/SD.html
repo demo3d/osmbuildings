@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Los Angeles</title>
+        <title>San Diego</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
         <link href="css/LA.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
         <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
         <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
-        <script src="data/SD_ct.geojson" type="text/javascript"></script>
+        <script src="data/SD_percapita.geojson" type="text/javascript"></script>
         <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
         
@@ -16,14 +16,33 @@
     
     
     <body>
-<!--         <ul id="sdbuttoncontainer">
-            <li><a href="#" id="LA_button" class="LA_button" >LOS ANGELES SCHOOL DISTRICT</a></li>
-        </ul> -->
 
         <div id="map"></div>
        
         <div id="saip-banner">
             <span><h3>San Diego School District</h3></span>
+            <h5 id='instructions'>Height equals the per capita lottery sales within the census tract</h5>
+            </span>
+        </div>
+
+        <!-- Legend -->
+        <div id='legendcontainer'>
+            <div>
+                <ul id="sdbuttoncontainer">
+                    <button id="twoD_button" class='active' >2D MAP</button>
+                    <button id="threeD_button" class='' >3D MAP</button>
+                </ul>
+                <p id='explore'>ZOOM IN and PAN<br>in the map to explore.</p>
+            </div>
+            <hr>
+            <div id='legendTitle' <a href="http://factfinder.census.gov/faces/nav/jsf/pages/index.xhtml "target="_blank">Median Household Income</a></div>
+                <ul id='legend-ui'>
+                    <li><span style='background:#750505;'></span>Less than $35K</li>
+                    <li><span style='background:#a96c6c;'></span>$35K - $55K</li>
+                    <li><span style='background:#e6e5ac;'></span>$55K - $75K</li>
+                    <li><span style='background:#6c9aa9;'></span>$75K - $95K</li>
+                    <li><span style='background:#056575;'></span>More than $95K</li>
+                </ul>
         </div>
 
         <script type="text/javascript">
@@ -38,16 +57,38 @@
                 id: 'mapbox.light'
             }).addTo(map);
 
+            var OSMBuildings3d;
 
-            new OSMBuildings(map).set(SD_ct);
+            L.geoJson(SD_ct, { 
+                style: function(feature) {
+                    return {
+                        color: feature.properties['roofColor'],
+                        fillColor: feature.properties['roofColor'],
+                        fillOpacity: 0.75,
+                        weight: 1.5
+                    }
+                }
+            }).addTo(map);
 
+           
+            function add3d(geojson){
+                OSMBuildings3d = new OSMBuildings(map).set(geojson);
+            }
 
-            // LA_button.onclick = function () {
-            //   LA_button.className = 'active';
-            //     map.setView([34.055420, -118.528479], 10);
-            //     new OSMBuildings(map).set(LA_ct);
-            // }
+            setTimeout(function() { add3d(SD_ct); }, 1000);
 
+            twoD_button.onclick = function () {
+                twoD_button.className = '';
+                threeD_button.className = 'active';
+                map.removeLayer(OSMBuildings3d);
+                map.setView([32.805773, -117.150125], 11);
+            }
+            threeD_button.onclick = function () {
+                threeD_button.className = '';
+                twoD_button.className = 'active';
+                map.addLayer(OSMBuildings3d);
+                map.setView([32.933988, -117.329489], 10); 
+            }
 
         </script>
 
