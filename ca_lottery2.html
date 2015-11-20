@@ -4,8 +4,8 @@
         <meta charset=utf-8 />
         <title>Lottery Sales in California</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
-        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
         <link href="css/ca_lotterymap2.css" rel="stylesheet" type="text/css" />
         <script src="data/losingSchools150.geojson" type="text/javascript"></script>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<nav id='menu-ui' class='menu-ui'></nav>
+<!-- <nav id='menu-ui' class='menu-ui'></nav> -->
 
 <div id="map"></div>
 <ul id='marker-list'></ul>
@@ -35,7 +35,7 @@ var map = L.mapbox.map('map')
 
 var markerList = document.getElementById('marker-list');
 
-var layers = document.getElementById('menu-ui');
+var layers = document.getElementById('marker-list');
 
 var stamenLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',{
   attribution: '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -57,10 +57,22 @@ addLayer(L.mapbox.tileLayer('edbuild.CA_SchoolDistricts'), 'California School Di
 addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers');
 // addLayer(L.mapbox.tileLayer('edbuild.CA_Schools'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
 
-var schoolsLayer = L.mapbox.featureLayer(losing).addTo(map);
-// console.log(layer);
+var schoolsLayer = L.mapbox.featureLayer(losing, {
+    style: function(feature) {
+        return {
+            color: "red"
+        }
+    },
+}).addTo(map);
 
 schoolsLayer.eachLayer(function(layer){
+  if (layer.feature.properties) {
+      var popupString = '<div class="popup">';
+          popupString += layer.feature.properties['bName'] + '<br />' + 'Neighborhood Population:' + layer.feature.properties['TotPop13'] + '<br />' + '2014 Lottery Sales: ' + layer.feature.properties['Sales_s'] + '<br />' + 'Education Money Earned from the Lottery: ' + layer.feature.properties['Allocs'] + '<br />' + 'Lottery Money Lost Per Pupil: ' + layer.feature.properties['NetLossPPs']+ '<br />' + 'Median Household Income: ' + layer.feature.properties['MHIs'] + '<br />' + 'Unemployment Rate: ' + layer.feature.properties['UnemplRs'] + '<br />' + 'High School Graduation Rate: ' + layer.feature.properties['HSgradRs'];
+      popupString += '</div>';
+      layer.bindPopup(popupString);
+  }
+  console.log(layer.feature.properties);
   var item = markerList.appendChild(document.createElement('li'));
   item.innerHTML = layer.toGeoJSON().properties.bName;
   item.onclick = function() {

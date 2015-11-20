@@ -231,9 +231,9 @@ html, body {
   .menu-ui {
     background:#fff;
     position:relative;
-    float: right;
+    float: left;
     top:90px;
-    right:10px;
+    left:55px;
     z-index:1;
     border-radius:3px;
     width:170px;
@@ -276,12 +276,13 @@ html, body {
 /*Styles for the schools list*/
   #marker-list {
       position:absolute;
-      top:0; right:0; width:200px;
+      top: 80px; right:0; width:25%;
       bottom:0;
       overflow-x:auto;
       background:#fff;
       margin:0;
       padding:5px;
+      font-family: 'Lato';
   }
   #marker-list li {
       padding:5px;
