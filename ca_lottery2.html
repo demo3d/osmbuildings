@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <title>Lottery Sales in California</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+        <link href="css/ca_lotterymap2.css" rel="stylesheet" type="text/css" />
+        <script src="data/losingSchools150.geojson" type="text/javascript"></script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
+        <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<nav id='menu-ui' class='menu-ui'></nav>
+
+<div id="map"></div>
+<ul id='marker-list'></ul>
+       
+<div id="saip-banner">
+    <a href="http://www.edbuild.org/"><img style="vertical-align:top" src="images/logo_inverse_262x160.png" id="logo"></a>
+    <span><h3>California Lottery</h3></span>
+</div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZWRidWlsZCIsImEiOiJ4bHp6Y0tjIn0.dpqBXb1GS1wFAVamebENvQ';
+var map = L.mapbox.map('map')
+  .setView([36.771900, -119.602869], 6)
+  .addControl(L.mapbox.geocoderControl('mapbox.places', {
+        autocomplete: true
+
+  }));
+
+var markerList = document.getElementById('marker-list');
+
+var layers = document.getElementById('menu-ui');
+
+var stamenLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',{
+  attribution: '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+}).addTo(map);
+
+// var schoolGrid = L.mapbox.gridLayer('edbuild.CA_Schools').addTo(map);
+// var schoolControl = L.mapbox.gridControl(schoolGrid, {follow: false}).addTo(map); 
+
+
+var districtGrid = L.mapbox.gridLayer('edbuild.CA_SchoolDistricts').addTo(map);
+var districtControl = L.mapbox.gridControl(districtGrid, {follow: false}).addTo(map); 
+
+
+var retailerGrid = L.mapbox.gridLayer('edbuild.CA_LotteryRetailers').addTo(map);
+var retailerControl = L.mapbox.gridControl(retailerGrid, {follow: false}).addTo(map); 
+
+
+addLayer(L.mapbox.tileLayer('edbuild.CA_SchoolDistricts'), 'California School Districts', districtGrid, districtControl);
+addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers');
+// addLayer(L.mapbox.tileLayer('edbuild.CA_Schools'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
+
+var schoolsLayer = L.mapbox.featureLayer(losing).addTo(map);
+// console.log(layer);
+
+schoolsLayer.eachLayer(function(layer){
+  var item = markerList.appendChild(document.createElement('li'));
+  item.innerHTML = layer.toGeoJSON().properties.bName;
+  item.onclick = function() {
+      map.setView(layer.getLatLng(), 14);
+      layer.openPopup();
+  };
+})
+
+
+
+//Streetmap Overlay Base Layer
+var overlay = L.mapbox.tileLayer('edbuild.f4de156e').addTo(map);
+
+
+
+function addLayer(layer, name, gridLayer, gridControl) {
+    layer.addTo(map);
+
+    // Create a layer switcher that
+    // toggles layers on and off.
+    var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.innerHTML = name;
+
+    link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+            map.removeLayer(gridLayer);
+            map.removeControl(gridControl);
+            this.className = '';
+        } else {
+            map.addLayer(layer);
+            gridLayer.addTo(map);
+            gridControl.addTo(map);
+            this.className = 'active';
+            map.removeLayer(overlay);
+            overlay.addTo(map);
+        }
+    };
+
+    layers.appendChild(link);
+}
+</script>
+</body>
+</html>
