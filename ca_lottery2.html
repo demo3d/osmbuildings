@@ -27,7 +27,7 @@
 <script>
 L.mapbox.accessToken = 'pk.eyJ1IjoiZWRidWlsZCIsImEiOiJ4bHp6Y0tjIn0.dpqBXb1GS1wFAVamebENvQ';
 var map = L.mapbox.map('map')
-  .setView([36.771900, -119.602869], 6)
+  .setView([36.770818, -117.992883], 6)
   .addControl(L.mapbox.geocoderControl('mapbox.places', {
         autocomplete: true
 
@@ -56,6 +56,7 @@ var retailerControl = L.mapbox.gridControl(retailerGrid, {follow: false}).addTo(
 addLayer(L.mapbox.tileLayer('edbuild.CA_SchoolDistricts'), 'California School Districts', districtGrid, districtControl);
 addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers');
 // addLayer(L.mapbox.tileLayer('edbuild.CA_Schools'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
+addTitle();
 
 var schoolsLayer = L.mapbox.featureLayer(losing, {
     style: function(feature) {
@@ -77,6 +78,7 @@ schoolsLayer.eachLayer(function(layer){
   item.innerHTML = layer.toGeoJSON().properties.bName;
   item.onclick = function() {
       map.setView(layer.getLatLng(), 14);
+      layer.className='active';
       layer.openPopup();
   };
 })
@@ -93,7 +95,7 @@ function addLayer(layer, name, gridLayer, gridControl) {
 
     // Create a layer switcher that
     // toggles layers on and off.
-    var link = document.createElement('a');
+    var link = document.createElement('li');
         link.href = '#';
         link.className = 'active';
         link.innerHTML = name;
@@ -119,6 +121,14 @@ function addLayer(layer, name, gridLayer, gridControl) {
 
     layers.appendChild(link);
 }
+
+function addTitle() {
+  var link = document.createElement('li');
+  link.href = '#';
+  link.className = 'active';
+  link.innerHTML = 'Schools within the';
+}
+
 </script>
 </body>
 </html>
