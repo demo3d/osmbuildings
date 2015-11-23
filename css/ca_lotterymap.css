@@ -52,9 +52,9 @@
       height: 100%;
   }
 
-  body #map .leaflet-control-container .leaflet-top {
+ /* body #map .leaflet-control-container .leaflet-top {
     left: 47%;
-  }
+  }*/
 
   div.leaflet-control-mapbox-geocoder-results {
     width: auto;
@@ -209,9 +209,9 @@ html, body {
     height: 65%;
   } 
 
-  body #map .leaflet-control-container .leaflet-top {
+/*  body #map .leaflet-control-container .leaflet-top {
     left: 180px;
-  }
+  }*/
 
   div.leaflet-control-mapbox-geocoder-results {
     width: auto;
@@ -268,7 +268,15 @@ html, body {
     color: #F4F7F8;
     text-align: left;
   }
+
+  div.leaflet-control-grid.map-tooltip {
+    float: left;
+  }
+
+
 }
+
+
 
 
   
