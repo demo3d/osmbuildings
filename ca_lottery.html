@@ -41,7 +41,7 @@ var stamenLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{
   attribution: '&copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
-var schoolGrid = L.mapbox.gridLayer('edbuild.BiggestLosingCensusTracts').addTo(map);
+var schoolGrid = L.mapbox.gridLayer('edbuild.CA_Schools').addTo(map);
 var schoolControl = L.mapbox.gridControl(schoolGrid, {follow: false}).addTo(map); 
 
 
@@ -49,13 +49,13 @@ var districtGrid = L.mapbox.gridLayer('edbuild.CA_SchoolDistricts').addTo(map);
 var districtControl = L.mapbox.gridControl(districtGrid, {follow: false}).addTo(map); 
 
 
-var retailerGrid = L.mapbox.gridLayer('edbuild.CA_LotteryRetailers').addTo(map);
-var retailerControl = L.mapbox.gridControl(retailerGrid, {follow: false}).addTo(map); 
+// var retailerGrid = L.mapbox.gridLayer('edbuild.CA_LotteryRetailers').addTo(map);
+// var retailerControl = L.mapbox.gridControl(retailerGrid, {follow: false}).addTo(map); 
 
 
 addLayer(L.mapbox.tileLayer('edbuild.CA_SchoolDistricts'), 'California School Districts', districtGrid, districtControl);
-addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers', retailerGrid, retailerControl);
-addLayer(L.mapbox.tileLayer('edbuild.BiggestLosingCensusTracts'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
+addLayer(L.mapbox.tileLayer('edbuild.CA_LotteryRetailers'), 'Lottery Retailers');
+addLayer(L.mapbox.tileLayer('edbuild.CA_Schools'), 'Schools in the Biggest Losing Neighborhoods', schoolGrid, schoolControl);
 
 
 //Streetmap Overlay Base Layer
