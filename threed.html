@@ -28,6 +28,7 @@
               <li><a href="#" id="Sac_button" class="Sac_button">Sacramento School District</a></li>
               <li><a href="#" id="SD_button" class="SD_button">San Diego School District</a></li>
               <li><a href="#" id="SF_button" class="SF_button">San Francisco School District</a></li>
+              <li><a href="#" id="SJ_button" class="SF_button">San Jose and East Side Union High School Districts</a></li>
             </ul>
           </div>
         </div>
@@ -49,6 +50,11 @@
 
             SF_button.onclick = function () {
               var info = "districts/SF.html";
+              document.getElementById('iframe').src = info;
+            }
+
+            SJ_button.onclick = function () {
+              var info = "districts/SJ_East.html";
               document.getElementById('iframe').src = info;
             }
 
