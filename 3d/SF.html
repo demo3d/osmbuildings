@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css">
         <script src="http://cdn.leafletjs.com/leaflet-0.7/leaflet-src.js"></script>
         <script src="dist/OSMBuildings-Leaflet.debug.js"></script>
-        <script src="data/SF_ctcap.geojson" type="text/javascript"></script>
+        <script src="data/SF_percapita.geojson" type="text/javascript"></script>
         <link href="http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css" />
         
@@ -58,7 +58,7 @@
 
             var OSMBuildings3d;
 
-            L.geoJson(SF_ct, { 
+            var sf2d = L.geoJson(SF_ct, { 
                 style: function(feature) {
                     return {
                         color: feature.properties['roofColor'],
@@ -66,12 +66,21 @@
                         fillOpacity: 0.75,
                         weight: 1.5
                     }
+                },
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties) {
+                        var popupString = '<div class="popup">';
+                            popupString += 'Population: ' + feature.properties['l_Pop'] + '<br />' + 'Students: ' + feature.properties['l_Pupils'] + '<br />' + 'Total Lottery Sales: ' + feature.properties['l_Sales'] + '<br />' + 'Total Lottery Allocations: ' + feature.properties['l_Allox'] + '<br />' + 'Net Loss to Lottery: ' + feature.properties['l_NetLoss'];
+                        popupString += '</div>';
+                        layer.bindPopup(popupString);
+                    }
                 }
             }).addTo(map);
 
            
             function add3d(geojson){
                 OSMBuildings3d = new OSMBuildings(map).set(geojson);
+                setTimeout(function() { map.removeLayer(sf2d); }, 500);
             }
 
             setTimeout(function() { add3d(SF_ct); }, 1000);
@@ -79,6 +88,7 @@
             twoD_button.onclick = function () {
                 twoD_button.className = '';
                 threeD_button.className = 'active';
+                map.addLayer(sf2d);
                 map.removeLayer(OSMBuildings3d);
                 map.setView([37.752322, -122.450741], 12);
             }
@@ -87,6 +97,7 @@
                 twoD_button.className = 'active';
                 map.addLayer(OSMBuildings3d);
                 map.setView([37.873086, -122.531983], 11); 
+                setTimeout(function() { map.removeLayer(sf2d); }, 500);
             }
 
 
